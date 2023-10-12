@@ -56,7 +56,7 @@
             <p class="fw-normal mb-1">+{{$item->phone}}</p>
           </td>
           <td>
-            <p class="fw-normal mb-1">{{$item->created_at->format('Y-m-d H:i')}}</p>
+            <p class="fw-normal mb-1">{{$item->created_at}} </p>
           </td>
           <td>
             <span class="c-pill c-pill--warning">panding</span>
