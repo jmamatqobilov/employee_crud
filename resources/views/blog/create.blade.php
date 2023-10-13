@@ -7,7 +7,7 @@
                 <form action="{{route('all-index')}}" method="POST">
                   @csrf
                   @method('GET')
-                  <button class="" type="submit" style="background-color: Transparent;background-repeat:no-repeat;border:none;overflow:hidden">
+                  <button class="d-flex align-items-center" type="submit" style="background-color: Transparent;background-repeat:no-repeat;border:none;overflow:hidden;color:red">
                     <img src="./arrow.svg" style="width: 20px"/>
                     Back
                   </button>
