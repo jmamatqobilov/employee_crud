@@ -28,11 +28,11 @@
                     @csrf
                     <div class="col-md-6">
                       <label for="inputEmail4" class="form-label">First name</label>
-                      <input type="text" class="form-control" name="firstname" placeholder="firstname">
+                      <input type="text" class="form-control" name="firstname" placeholder="firstname" required>
                     </div>
                     <div class="col-md-6">
                       <label for="inputPassword4" class="form-label">Last name</label>
-                      <input type="text" class="form-control" name="lastname" placeholder="lastname">
+                      <input type="text" class="form-control" name="lastname" placeholder="lastname" required>
                     </div>
                     <div class="col-md-4">
                         <label for="inputState" class="form-label">Position</label>
@@ -63,15 +63,15 @@
                     </div>
                     <div class="col-md-4">
                       <label for="inputZip" class="form-label">Email</label>
-                      <input type="email" class="form-control" name="email" id="inputZip">
+                      <input type="email" class="form-control" name="email" id="inputZip" required>
                     </div>
                     <div class="col-12">
                       <label for="inputAddress" class="form-label">Address</label>
-                      <input type="text" class="form-control" name="address" id="inputAddress" placeholder="for example Tashkent ....">
+                      <input type="text" class="form-control" name="address" id="inputAddress" required placeholder="for example Tashkent ....">
                     </div>
                     <div class="col-12">
                       <label for="inputAddress2" class="form-label">Phone number</label>
-                      <input type="number" class="form-control" name="phone" id="inputAddress2" placeholder="+9989 ( )">
+                      <input type="number" class="form-control" name="phone" id="inputAddress2" required placeholder="+9989 ( )">
                     </div>
                     
                     <div class="col-12">
