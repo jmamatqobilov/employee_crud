@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('city');
             $table->string('email');
             $table->string('address');
+            $table->string('file');
+            $table->string('filetype');
             $table->string('phone');
             $table->timestamps();
         });

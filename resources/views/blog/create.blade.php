@@ -70,6 +70,10 @@
                       <input type="text" class="form-control" name="address" id="inputAddress" required placeholder="for example Tashkent ....">
                     </div>
                     <div class="col-12">
+                      <label for="inputAddress" class="form-label">File upload</label>
+                      <input type="file" class="form-control" name="file" id="inputAddress" value="" required>
+                    </div>
+                    <div class="col-12">
                       <label for="inputAddress2" class="form-label">Phone number</label>
                       <input type="number" class="form-control" name="phone" id="inputAddress2" required placeholder="+9989 ( )">
                     </div>

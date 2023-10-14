@@ -26,5 +26,15 @@ Route::put('/application/{id}',[ApplicationController::class,'update'])->name('a
 Route::delete('/application-delete/{id}',[ApplicationController::class,'delete'])->name('application-delete');
 
 Route::get('/exel',[ApplicationController::class,'excel'])->name('get-excel');
+Route::get('filedownload/{name}',[ApplicationController::class,'fileDownload'])->name('file-download');
+
+Route::get('/getFile/{id}',[ApplicationController::class,'fileUpload'])->name('get-file');
+
+Route::get('show-excel/{name}',[ApplicationController::class,'showExcel'])->name('show-excel');
+Route::get('show-word/{name}',[ApplicationController::class,'showWord'])->name('show-word');
+
+
+
+
 
 

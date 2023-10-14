@@ -11,7 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UsersExport;
+use Faker\Core\File;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Storage;
 
 class ApplicationController extends Controller
 {
@@ -25,6 +27,7 @@ class ApplicationController extends Controller
     public function all()
     {
         $applications = $this->service->getList();
+        // echo asset('storage/file.txt');
         // dd($applications);
         return view('blog.allapp',['applications'=>$applications]);
     }
@@ -43,17 +46,26 @@ class ApplicationController extends Controller
 
     public function store(Request $request)
     {
+
         try {
-            
-            $app = $this->service->createModel($request->all());
+
+        $data = $request->all();
+        $request->validate([
+            'file' => 'required|mimes:pdf,xlxs,xlsx,xlx,docx,doc,csv,txt,png,gif,jpg,jpeg,zip,pptx|max:2048',
+        ]);
+        $file = $request->file('file');
+        $name = $file->getClientOriginalName();
+        $path = $file->storeAs('files',$name);
+        $data['filetype'] = $file->getClientOriginalExtension();
+        $data['file'] = $name;
+        $app = $this->service->createModel($data);
            
-            
+
            Event::dispatch(new EmployeeEvent($app->firstname));
-            
+           return redirect('/');
         } catch (\Throwable $th) {
-            $th->getMessage();
+            dd($th->getMessage());
         }
-        return redirect('/');
     }
 
     public function show($id)
@@ -65,13 +77,21 @@ class ApplicationController extends Controller
     public function edit($id)
     {
         $application = Application::find($id);
-
         return view('blog.edit', ['application' => $application]);
     }
 
     public function update(Request $request, $id)
     {
-        $data = $this->service->update($id,$request->all());
+        $data = $request->all();
+        $request->validate([
+            'file' => 'required|mimes:pdf,xlxs,xlsx,xlx,docx,doc,csv,txt,png,gif,jpg,jpeg,zip,pptx|max:2048',
+        ]);
+        $file = $request->file('file');
+        $name = $file->getClientOriginalName();
+        $path = $file->storeAs('files',$name);
+        $data['filetype'] = $file->getClientOriginalExtension();
+        $data['file'] = $name;
+        $data = $this->service->update($id, $data);
         return redirect('/')->with('success', 'Project aangepast');
     }
 
@@ -85,31 +105,44 @@ class ApplicationController extends Controller
         }
     }
 
+    public function showExcel($name)
+    {
+        return view('blog.viewFile',compact('name'));
+    }
+
+    public function showWord($name)
+    {
+        return view('blog.viewWord',compact('name'));
+    }
+
+    public function fileDownload($name){
+        $path = asset('storage/files/'.$name);
+        return Storage::download($path);
+    }
 
     public function excel(Request $request){
         $model = Application::get();
-        
         $excelHeader = [];
         $n = 1;
         $excelHeader[] = [
-        'N', 
-        'firstname',
-        'lastname',
-        'position',
-        'city',
-        'email',
-        'address',
-        'phone',
-        'created_at',
-        'updated_at'
+            'N', 
+            'firstname',
+            'lastname',
+            'position',
+            'city',
+            'email',
+            'address',
+            'phone',
+            'created_at',
+            'updated_at'
         ];
 
-        foreach ($model as $value) {
-            $excelHeader[] = $this->assignData($n++,$value);
-        }
+        foreach ($model as $value) $excelHeader[] = $this->assignData($n++,$value);
         return Excel::download(new UsersExport($excelHeader), 'users.xlsx');
     }
-    protected function assignData($n, $value){
+
+    protected function assignData($n, $value)
+    {
         return [
             'N'=>$n,
             'firstname'=>$value->firstname,
@@ -123,6 +156,4 @@ class ApplicationController extends Controller
             'updated_at'=>$value->updated_at->format('Y-m-d H:i')
         ];
     }
-
-    
 }

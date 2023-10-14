@@ -20,6 +20,8 @@ class ApplicationSeeder extends Seeder
             'city'=>'Tashkent',
             'email'=>'javakhir@mail.ru',
             'address'=>'Surkhandarya',
+            'filetype'=>'png',
+            'file'=>'image.png',
             'phone'=>+998915754360
         ]);
     }

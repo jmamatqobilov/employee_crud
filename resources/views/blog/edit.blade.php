@@ -60,19 +60,23 @@
                       <label for="inputAddress" class="form-label">Address</label>
                       <input type="text" class="form-control" name="address" id="inputAddress" value="{{$application->address}}" placeholder="for example Tashkent ....">
                     </div>
+                    {{-- @php
+                      $file = 
+                    @endphp --}}
+                    <div @if($application->file) class="col-6" @else class="col-12" @endif>
+                      <label for="inputAddress" class="form-label">File upload</label>
+                      <input type="file" class="form-control" name="file" id="inputAddress" value="{{$application->file}}">
+                    </div>
+                    <div @if($application->file) class="col-6" @else class="d-none" @endif>
+                      <label for="inputAddress" class="form-label"></label>
+                      <input disabled type="text" class="form-control" name="file" id="inputAddress" value="{{$application->file}}">
+                    </div>
                     <div class="col-12">
                       <label class="form-label">Phone number</label>
                       <input type="number" class="form-control" name="phone" value="{{$application->phone}}" placeholder="+9989 ( )">
                     </div>
                     
-                    {{-- <div class="col-12">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                        <label class="form-check-label" name="title" for="gridCheck">
-                          Проверить меня
-                        </label>
-                      </div>
-                    </div> --}}
+                    
                     <div class="col-12">
                       <button type="submit" class="btn btn-primary">Update</button>
                     </div>

@@ -17,6 +17,8 @@ class Application extends Model
         'city',
         'email',
         'address',
+        'filetype',
+        'file',
         'phone'
     ];
 
