@@ -68,7 +68,7 @@
                       <input type="file" class="form-control" name="file" id="inputAddress" value="{{$application->file}}">
                     </div>
                     <div @if($application->file) class="col-6" @else class="d-none" @endif>
-                      <label for="inputAddress" class="form-label"></label>
+                      <label for="inputAddress" class="form-label">Old file</label>
                       <input disabled type="text" class="form-control" name="file" id="inputAddress" value="{{$application->file}}">
                     </div>
                     <div class="col-12">
