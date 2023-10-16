@@ -3,7 +3,7 @@
 
 <div class="">
   @php
-$path = asset('storage/files/'.$name);
+$path = asset('files/'.$name);
 @endphp
 {{-- @dd($path)  --}}
 

@@ -55,7 +55,8 @@ class ApplicationController extends Controller
         ]);
         $file = $request->file('file');
         $name = $file->getClientOriginalName();
-        $path = $file->storeAs('files',$name);
+        // $path = $file->storeAs('files',$name);
+        $path = $file->move(public_path('files'), $name);
         $data['filetype'] = $file->getClientOriginalExtension();
         $data['file'] = $name;
         $app = $this->service->createModel($data);
