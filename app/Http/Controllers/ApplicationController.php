@@ -55,8 +55,8 @@ class ApplicationController extends Controller
         ]);
         $file = $request->file('file');
         $name = $file->getClientOriginalName();
-        // $path = $file->storeAs('files',$name);
-        $path = $file->move(public_path('files'), $name);
+        $path = $file->storeAs('files',$name);
+        // $path = $file->move(public_path('files'), $name);
         $data['filetype'] = $file->getClientOriginalExtension();
         $data['file'] = $name;
         $app = $this->service->createModel($data);
@@ -83,13 +83,17 @@ class ApplicationController extends Controller
 
     public function update(Request $request, $id)
     {
+        $application = $this->service->getById($id);
         $data = $request->all();
         $request->validate([
             'file' => 'required|mimes:pdf,xlxs,xlsx,xlx,docx,doc,csv,txt,png,gif,jpg,jpeg,zip,pptx|max:2048',
         ]);
         $file = $request->file('file');
         $name = $file->getClientOriginalName();
-        $path = $file->move(public_path('files'), $name);
+        $path = $file->storeAs('files',$name);
+        if(is_file($path = public_path('files') . "/$application->file")) {
+            unlink($path);
+        }
         $data['filetype'] = $file->getClientOriginalExtension();
         $data['file'] = $name;
         $data = $this->service->update($id, $data);
