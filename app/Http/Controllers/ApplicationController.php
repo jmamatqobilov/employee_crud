@@ -5,13 +5,10 @@ namespace App\Http\Controllers;
 use App\Events\EmployeeEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
-use App\Models\User;
 use App\Services\ApplicationService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UsersExport;
-use Faker\Core\File;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,8 +19,6 @@ class ApplicationController extends Controller
         
     }
     
-
-
     public function all()
     {
         $applications = $this->service->getList();
@@ -54,10 +49,10 @@ class ApplicationController extends Controller
             'file' => 'required|mimes:pdf,xlxs,xlsx,xlx,docx,doc,csv,txt,png,gif,jpg,jpeg,zip,pptx|max:2048',
         ]);
         $file = $request->file('file');
-        $name = $file->getClientOriginalName();
-        $path = $file->storeAs('files',$name);
-        // $path = $file->move(public_path('files'), $name);
         $data['filetype'] = $file->getClientOriginalExtension();
+        $name = date("YmdHis").'.'.$data['filetype'];
+        $path = $file->storeAs('files',  $name);
+        // $path = $file->move(public_path('files'), $name);
         $data['file'] = $name;
         $app = $this->service->createModel($data);
            
@@ -89,11 +84,13 @@ class ApplicationController extends Controller
             'file' => 'required|mimes:pdf,xlxs,xlsx,xlx,docx,doc,csv,txt,png,gif,jpg,jpeg,zip,pptx|max:2048',
         ]);
         $file = $request->file('file');
-        $name = $file->getClientOriginalName();
-        $path = $file->storeAs('files',$name);
-        if(is_file($path = public_path('files') . "/$application->file")) {
+        $path = storage_path('app/public/files') . "/$application->file";
+        if(is_file($path)) {
             unlink($path);
         }
+        $data['filetype'] = $file->getClientOriginalExtension();
+        $name = date("YmdHis").'.'.$data['filetype'];
+        $path = $file->storeAs('files',  $name);
         $data['filetype'] = $file->getClientOriginalExtension();
         $data['file'] = $name;
         $data = $this->service->update($id, $data);
@@ -103,6 +100,11 @@ class ApplicationController extends Controller
     public function delete($id)
     {
         try {
+            $application = $this->service->getById($id);
+            $path = storage_path('app/public/files') . "/$application->file";
+            if(is_file($path)) {
+                unlink($path);
+            }
             $data = $this->service->delete($id);
             return redirect('/');
         } catch (\Throwable $th) {
