@@ -18,7 +18,8 @@ $path = asset('files/'.$name);
       </div>
     </div>
     <div class="col-10" style="display:flex;justify-content:space-between">
-      <iframe style="width: 80%" height="1000vh" src="//docs.google.com/gview?url={{$path}}&embedded=true"></iframe>
+      <iframe src='https://view.officeapps.live.com/op/embed.aspx?src={{$path}}' width='100%' height='1000vh' frameborder='0'>This is an embedded <a target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by <a target='_blank' href='http://office.com/webapps'>Office Online</a>.</iframe>
+      
     </div>
     </div>
   </div>

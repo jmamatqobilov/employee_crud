@@ -66,9 +66,20 @@
               <div class="" style="position: relative">
                 <img src="{{url('/file.svg')}}" style="width: 40px"/>
                 <div class="" style="position:absolute;top:22%;left:22%">
+                 
+                  @if(in_array($item->filetype,['doc','docx','xlsx','xls','pptx','ppt']) )
                   <a href="{{route('show-word',['name'=>"$item->file"])}}">
                     <img src="{{url('/viewl-alt.svg')}}" style="width: 20px" />
                   </a>
+                  @else 
+                  @php
+                  $path = asset('files/'.$item->file);
+                  @endphp
+                  <a href="{{$path}}" target="_blank">
+                    <img src="{{url('/viewl-alt.svg')}}" style="width: 20px" />
+                  </a>
+                  @endif
+                  
                 </div>
               </div>
               <div class="d-flex align-items-center text-align-center"
