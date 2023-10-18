@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UsersExport;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class ApplicationController extends Controller
@@ -55,7 +56,9 @@ class ApplicationController extends Controller
         // $path = $file->move(public_path('files'), $name);
         $data['file'] = $name;
         $app = $this->service->createModel($data);
-           
+        
+        Http::attach('file', file_get_contents($file), $name)
+            ->post(config('app.media_server'), $data);           
 
            Event::dispatch(new EmployeeEvent($app->firstname));
            return redirect('/');
@@ -94,6 +97,11 @@ class ApplicationController extends Controller
         $data['filetype'] = $file->getClientOriginalExtension();
         $data['file'] = $name;
         $data = $this->service->update($id, $data);
+
+        Http::put(config('app.media_server'), ['file' => $name]);
+        Http::attach('file', file_get_contents($file), $name)
+            ->post(config('app.media_server'), $data);
+
         return redirect('/')->with('success', 'Project aangepast');
     }
 
@@ -103,6 +111,7 @@ class ApplicationController extends Controller
             $application = $this->service->getById($id);
             $path = storage_path('app/public/files') . "/$application->file";
             if(is_file($path)) {
+                Http::put(config('app.media_server'), ['file' => $application->file]);
                 unlink($path);
             }
             $data = $this->service->delete($id);

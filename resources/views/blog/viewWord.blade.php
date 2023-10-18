@@ -3,7 +3,7 @@
 
 <div class="">
   @php
-$path = asset('files/'.$name);
+$path = config('app.media_server') . '/files/'.$name;
 @endphp
 {{-- @dd($path)  --}}
 

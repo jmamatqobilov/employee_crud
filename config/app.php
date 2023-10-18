@@ -59,6 +59,8 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'media_server' => env('MEDIA_SERVER', 'https://right.uz'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
