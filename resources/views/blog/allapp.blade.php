@@ -73,7 +73,7 @@
 
                   <!-- Button trigger modal -->
                   <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    <img src="{{url('/viewl-alt.svg')}}" style="width: 20px" />
+                    {{-- <img src="{{url('/viewl-alt.svg')}}" style="width: 20px" /> --}}
                   </button>
 
                   <!-- Modal -->
@@ -90,7 +90,7 @@
                             @php
                             $path = config('app.media_server') . '/files/'.$item->file;
                             @endphp
-                            @dd($path)
+                            
                             <iframe src='https://view.officeapps.live.com/op/embed.aspx?src={{$path}}' width='100%'
                               height='1000vh' frameborder='0'>This is an embedded <a target='_blank'
                                 href='http://office.com'>Microsoft Office</a> document, powered by <a target='_blank'
@@ -110,7 +110,7 @@
                   $path = asset('files/'.$item->file);
                   @endphp
                   <a href="{{$path}}" target="_blank">
-                    <img src="{{url('/viewl-alt.svg')}}" style="width: 20px" />
+                    {{-- <img src="{{url('/viewl-alt.svg')}}" style="width: 20px" /> --}}
                   </a>
                   @endif
 
