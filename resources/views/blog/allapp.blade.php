@@ -85,7 +85,9 @@
               <div class="d-flex align-items-center text-align-center"
                 style="background-color: rgb(84, 108, 244);color:white;border-radius:5px">
                 <a href="{{asset(asset('files/'.$item->file))}}" target="_blank"
-                  style="padding:4px;color:#fff;font-size:12px;max-width:200px;font-weight:600">{{$item->filetype}}
+                  style="padding:4px;color:#fff;font-size:12px;max-width:200px;font-weight:600;align-items:center;text-decoration:none">
+                  <img src="{{url('/down.svg')}}" width="20px"/>
+                  {{$item->filetype}}
                 </a>
               </div>
             </div>
