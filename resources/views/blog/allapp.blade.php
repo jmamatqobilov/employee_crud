@@ -64,14 +64,48 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="" style="position: relative">
-                <img src="{{url('/file.svg')}}" style="width: 40px"/>
+                <img src="{{url('/file.svg')}}" style="width: 40px" />
                 <div class="" style="position:absolute;top:22%;left:22%">
-                 
                   @if(in_array($item->filetype,['doc','docx','xlsx','xls','pptx','ppt']) )
-                  <a href="{{route('show-word',['name'=>"$item->file"])}}">
+                  {{-- <a href="{{route('show-word',['name'=>" $item->file"])}}">
                     <img src="{{url('/viewl-alt.svg')}}" style="width: 20px" />
-                  </a>
-                  @else 
+                  </a> --}}
+
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <img src="{{url('/viewl-alt.svg')}}" style="width: 20px" />
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-fullscreen">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="col-12" style="display:flex;justify-content:space-between">
+                            @php
+                            $path = config('app.media_server') . '/files/'.$item->file;
+                            @endphp
+                            @dd($path)
+                            <iframe src='https://view.officeapps.live.com/op/embed.aspx?src={{$path}}' width='100%'
+                              height='1000vh' frameborder='0'>This is an embedded <a target='_blank'
+                                href='http://office.com'>Microsoft Office</a> document, powered by <a target='_blank'
+                                href='http://office.com/webapps'>Office Online</a>.</iframe>
+
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Understood</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  @else
                   @php
                   $path = asset('files/'.$item->file);
                   @endphp
@@ -79,14 +113,14 @@
                     <img src="{{url('/viewl-alt.svg')}}" style="width: 20px" />
                   </a>
                   @endif
-                  
+
                 </div>
               </div>
               <div class="d-flex align-items-center text-align-center"
                 style="background-color: rgb(84, 108, 244);color:white;border-radius:5px">
                 <a href="{{asset(asset('files/'.$item->file))}}" target="_blank"
                   style="padding:4px;color:#fff;font-size:12px;max-width:200px;font-weight:600;align-items:center;text-decoration:none">
-                  <img src="{{url('/down.svg')}}" width="20px"/>
+                  <img src="{{url('/down.svg')}}" width="20px" />
                   {{$item->filetype}}
                 </a>
               </div>
@@ -153,7 +187,7 @@
       const doc = new Docxtemplater().loadZip(buffer);
       // Process the document and render it in the desired format
     });
-  </script>
+</script>
 
 <style>
   @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
